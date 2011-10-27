@@ -9,7 +9,7 @@ URL:		http://openxcom.org/
 Group:		Education
 License:	GPL
 BuildRequires:	SDL_mixer-devel SDL_gfx-devel yaml-devel
-BuildRequires:	yaml-cpp-devel TiMidity++ 
+BuildRequires:	yaml-cpp-devel TiMidity++ cmake 
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}
 Patch0:		yaml_include.patch
 
