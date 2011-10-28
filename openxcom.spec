@@ -1,22 +1,23 @@
 %define	git_check 372-g666c9c9
 
 Name:		openxcom
-Summary:	Curtain is a tool that show a movable and resizable curtain on the desktop screen
+Summary:	Open-source reimplementation of the original X-Com
 Version:	0.3
-Release:	%mkrel 2
+Release:	%mkrel 3
 Source0:	https://github.com/SupSuper/OpenXcom/%{name}-%{version}-%{git_check}.zip
 URL:		http://openxcom.org/
-Group:		Education
+Group:		Games/Strategy
 License:	GPL
 BuildRequires:	SDL_mixer-devel SDL_gfx-devel yaml-devel
 BuildRequires:	yaml-cpp-devel TiMidity++ cmake 
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}
 
 %description
-Curtain is a tool that show a movable and resizable curtain
-on the desktop screen
-You can use this to hide and show objects on the desktop
-This program has been implemented for educational purposes
+OpenXcom is an open-source reimplementation of the popular
+UFO: Enemy Unknown (X-Com: UFO Defense in USA) videogame by
+Microprose, licensed under the GPL and written in C++ / SDL.
+See more info at the website: http://openxcom.org
+
 OpenXcom requires the original X-Com resources (any version).
 If you have the Steam version, you can find the X-Com game
 folder in "Steam\steamapps\common\xcom ufo defense\XCOM".
