@@ -3,7 +3,7 @@
 Name:		openxcom
 Summary:	Curtain is a tool that show a movable and resizable curtain on the desktop screen
 Version:	0.3
-Release:	%mkrel 1
+Release:	%mkrel 2
 Source0:	https://github.com/SupSuper/OpenXcom/%{name}-%{version}-%{git_check}.zip
 URL:		http://openxcom.org/
 Group:		Education
@@ -11,17 +11,24 @@ License:	GPL
 BuildRequires:	SDL_mixer-devel SDL_gfx-devel yaml-devel
 BuildRequires:	yaml-cpp-devel TiMidity++ cmake 
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}
-Patch0:		yaml_include.patch
 
 %description
 Curtain is a tool that show a movable and resizable curtain
 on the desktop screen
 You can use this to hide and show objects on the desktop
 This program has been implemented for educational purposes
+OpenXcom requires the original X-Com resources (any version).
+If you have the Steam version, you can find the X-Com game
+folder in "Steam\steamapps\common\xcom ufo defense\XCOM".
+
+When installing manually, copy the X-Com subfolders (GEODATA,
+GEOGRAPH, MAPS, ROUTES, SOUND, TERRAIN, UFOGRAPH, UFOINTRO,
+UNITS) to OpenXcom's Data folder in one of the following paths:
+/usr/share/openxcom
 
 %prep
 %setup -q -n %{name}-%{version}-%{git_check}
-%patch0 -p1
+for i in $( find . \( -name '*.cpp' -o -name '*.h' \));do sed -i '/#include "yaml.h"/s/$/\n#include "yaml-cpp\/yaml.h"/' $i;done
 
 %build
 %cmake -DDATADIR=%{_datadir}
