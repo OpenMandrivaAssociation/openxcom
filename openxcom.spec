@@ -1,16 +1,19 @@
-%define	git_check 372-g666c9c9
+%define	git_check 4be8d13
 
 Name:		openxcom
 Summary:	Open-source reimplementation of the original X-Com
-Version:	0.3
-Release:	%mkrel 3
-Source0:	https://github.com/SupSuper/OpenXcom/%{name}-%{version}-%{git_check}.zip
+Version:	0.4.0
+Release:	%mkrel 1
+#openxcom-0.4.0-4be8d13.tar.bz2
+Source0:	https://github.com/SupSuper/OpenXcom/%{name}-%{version}-%{git_check}.tar.bz2
 URL:		http://openxcom.org/
 Group:		Games/Strategy
 License:	GPL
-BuildRequires:	SDL_mixer-devel SDL_gfx-devel yaml-devel
-BuildRequires:	yaml-cpp-devel TiMidity++ cmake 
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}
+BuildRequires:	yaml-devel
+BuildRequires:	pkgconfig(SDL_gfx)
+BuildRequires:	pkgconfig(SDL_mixer)
+BuildRequires:	pkgconfig(yaml-cpp)
+BuildRequires:	TiMidity++ cmake 
 
 %description
 OpenXcom is an open-source reimplementation of the popular
@@ -36,18 +39,13 @@ for i in $( find . \( -name '*.cpp' -o -name '*.h' \));do sed -i '/#include "yam
 %make
 
 %install
-rm -rf $RPM_BUILD_ROOT
 cd build/
-%makeinstall DESTDIR=%{buildroot}
+%makeinstall_std DESTDIR=%{buildroot}
 
 %__install -d "%{buildroot}%{_datadir}/%{name}/"
 
-mv "%{buildroot}/usr/bin/DATA" "%{buildroot}%{_datadir}/%{name}"
-
-%clean
-rm -rf $RPM_BUILD_ROOT
+#mv "%{buildroot}/usr/bin/DATA" "%{buildroot}%{_datadir}/%{name}"
 
 %files
-%defattr(-,root,root,-)
 %{_bindir}/%name
 %{_datadir}/%{name}/
