@@ -8,7 +8,7 @@ Release:	%mkrel 1
 Source0:	https://github.com/SupSuper/OpenXcom/%{name}-%{version}-%{git_check}.tar.bz2
 URL:		http://openxcom.org/
 Group:		Games/Strategy
-License:	GPL
+License:	GPLv3
 BuildRequires:	yaml-devel
 BuildRequires:	pkgconfig(SDL_gfx)
 BuildRequires:	pkgconfig(SDL_mixer)
