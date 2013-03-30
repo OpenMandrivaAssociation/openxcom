@@ -1,11 +1,15 @@
-%define	git_check 4be8d13
+%define	git_check ee4d466
 
 Name:		openxcom
 Summary:	Open-source reimplementation of the original X-Com
-Version:	0.4.0
+Version:	0.4.5
 Release:	%mkrel 1
+%if "%git_check" != ""
 #openxcom-0.4.0-4be8d13.tar.bz2
-Source0:	https://github.com/SupSuper/OpenXcom/%{name}-%{version}-%{git_check}.tar.bz2
+Source0:	https://github.com/SupSuper/OpenXcom/SupSuper-OpenXcom-v%{version}-0-g%{git_check}.tar.gz
+%else
+Source0:	http://openxcom.org/wp-content/uploads/downloads/2012/11/openxcom-0.4.5.tar.gz
+%endif
 URL:		http://openxcom.org/
 Group:		Games/Strategy
 License:	GPLv3
@@ -31,7 +35,11 @@ UNITS) to OpenXcom's Data folder in one of the following paths:
 /usr/share/openxcom
 
 %prep
-%setup -q -n %{name}-%{version}-%{git_check}
+%if "%git_check" != ""
+%setup -q -n SupSuper-OpenXcom-%git_check
+%else
+%setup -q
+%endif
 for i in $( find . \( -name '*.cpp' -o -name '*.h' \));do sed -i '/#include "yaml.h"/s/$/\n#include "yaml-cpp\/yaml.h"/' $i;done
 
 %build
