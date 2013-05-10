@@ -1,23 +1,22 @@
-%define	git_check ee4d466
-
 Name:		openxcom
 Summary:	Open-source reimplementation of the original X-Com
-Version:	0.4.5
-Release:	%mkrel 1
-%if "%git_check" != ""
-#openxcom-0.4.0-4be8d13.tar.bz2
-Source0:	https://github.com/SupSuper/OpenXcom/SupSuper-OpenXcom-v%{version}-0-g%{git_check}.tar.gz
-%else
-Source0:	http://openxcom.org/wp-content/uploads/downloads/2012/11/openxcom-0.4.5.tar.gz
-%endif
-URL:		http://openxcom.org/
+Version:	0.9
+Release:	1
 Group:		Games/Strategy
 License:	GPLv3
-BuildRequires:	yaml-devel
+URL:		http://openxcom.org/
+Source0:	https://github.com/SupSuper/OpenXcom/OpenXcom-%{version}.zip
+# http://www.iconfinder.com/icondetails/1360/128/ufo_icon
+Source1:	%{name}.png
+BuildRequires:	cmake
+BuildRequires:	imagemagick
+BuildRequires:	pkgconfig(gl)
+BuildRequires:	pkgconfig(glu)
+BuildRequires:	pkgconfig(sdl)
 BuildRequires:	pkgconfig(SDL_gfx)
+BuildRequires:	pkgconfig(SDL_image)
 BuildRequires:	pkgconfig(SDL_mixer)
 BuildRequires:	pkgconfig(yaml-cpp)
-BuildRequires:	TiMidity++ cmake 
 
 %description
 OpenXcom is an open-source reimplementation of the popular
@@ -31,29 +30,46 @@ folder in "Steam\steamapps\common\xcom ufo defense\XCOM".
 
 When installing manually, copy the X-Com subfolders (GEODATA,
 GEOGRAPH, MAPS, ROUTES, SOUND, TERRAIN, UFOGRAPH, UFOINTRO,
-UNITS) to OpenXcom's Data folder in one of the following paths:
-/usr/share/openxcom
+UNITS) to OpenXcom's data folder in the following path:
+/usr/share/openxcom/
+
+Important! Please use supported game editions for data files.
+Otherwise you may get various messages about missing files or
+even segmentation faults.
 
 %prep
-%if "%git_check" != ""
-%setup -q -n SupSuper-OpenXcom-%git_check
-%else
-%setup -q
-%endif
-for i in $( find . \( -name '*.cpp' -o -name '*.h' \));do sed -i '/#include "yaml.h"/s/$/\n#include "yaml-cpp\/yaml.h"/' $i;done
+%setup -q -n OpenXcom-%{version}
 
 %build
-%cmake -DDATADIR=%{_datadir}
+%cmake
 %make
 
 %install
-cd build/
-%makeinstall_std DESTDIR=%{buildroot}
+%makeinstall_std -C build
 
-%__install -d "%{buildroot}%{_datadir}/%{name}/"
+# install menu entry
+mkdir -p %{buildroot}%{_datadir}/applications/
+cat > %{buildroot}%{_datadir}/applications/%{name}.desktop << EOF
+[Desktop Entry]
+Name=OpenXcom
+Comment=Open-source reimplementation of the original X-Com
+Exec=%{_bindir}/%{name}
+Icon=%{name}
+Terminal=false
+Type=Application
+Categories=Game;StrategyGame;
+EOF
 
-#mv "%{buildroot}/usr/bin/DATA" "%{buildroot}%{_datadir}/%{name}"
+# install menu icons
+for N in 16 32 48 64 128;
+do
+convert %{SOURCE1} -resize ${N}x${N} $N.png;
+install -D -m 0644 16.png %{buildroot}%{_iconsdir}/hicolor/${N}x${N}/apps/%{name}.png
+done
 
 %files
-%{_bindir}/%name
-%{_datadir}/%{name}/
+%{_bindir}/%{name}
+%{_datadir}/applications/%{name}.desktop
+%{_iconsdir}/hicolor/*/apps/%{name}.png
+%defattr(0644,root,root,0777)
+%{_datadir}/%{name}
