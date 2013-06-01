@@ -64,7 +64,7 @@ EOF
 for N in 16 32 48 64 128;
 do
 convert %{SOURCE1} -resize ${N}x${N} $N.png;
-install -D -m 0644 16.png %{buildroot}%{_iconsdir}/hicolor/${N}x${N}/apps/%{name}.png
+install -D -m 0644 $N.png %{buildroot}%{_iconsdir}/hicolor/${N}x${N}/apps/%{name}.png
 done
 
 %files
