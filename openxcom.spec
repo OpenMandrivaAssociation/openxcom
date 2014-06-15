@@ -1,11 +1,11 @@
-Name:		openxcom
 Summary:	Open-source reimplementation of the original X-Com
-Version:	0.9
+Name:		openxcom
+Version:	1.0.0
 Release:	1
+License:	GPLv3+
 Group:		Games/Strategy
-License:	GPLv3
-URL:		http://openxcom.org/
-Source0:	https://github.com/SupSuper/OpenXcom/OpenXcom-%{version}.zip
+Url:		http://openxcom.org/
+Source0:	https://github.com/SupSuper/OpenXcom/%{name}-%{version}.tar.gz
 # http://www.iconfinder.com/icondetails/1360/128/ufo_icon
 Source1:	%{name}.png
 BuildRequires:	cmake
@@ -37,8 +37,17 @@ Important! Please use supported game editions for data files.
 Otherwise you may get various messages about missing files or
 even segmentation faults.
 
+%files
+%{_bindir}/%{name}
+%{_datadir}/applications/%{name}.desktop
+%{_iconsdir}/hicolor/*/apps/%{name}.png
+%defattr(0644,root,root,0777)
+%{_datadir}/%{name}
+
+#----------------------------------------------------------------------------
+
 %prep
-%setup -q -n OpenXcom-%{version}
+%setup -q
 
 %build
 %cmake
@@ -67,9 +76,3 @@ convert %{SOURCE1} -resize ${N}x${N} $N.png;
 install -D -m 0644 $N.png %{buildroot}%{_iconsdir}/hicolor/${N}x${N}/apps/%{name}.png
 done
 
-%files
-%{_bindir}/%{name}
-%{_datadir}/applications/%{name}.desktop
-%{_iconsdir}/hicolor/*/apps/%{name}.png
-%defattr(0644,root,root,0777)
-%{_datadir}/%{name}
