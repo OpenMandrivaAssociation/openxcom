@@ -16,7 +16,7 @@ BuildRequires:	pkgconfig(sdl)
 BuildRequires:	pkgconfig(SDL_gfx)
 BuildRequires:	pkgconfig(SDL_image)
 BuildRequires:	pkgconfig(SDL_mixer)
-BuildRequires:	pkgconfig(yaml-cpp)
+BuildRequires:	pkgconfig(yaml-cpp) >= 0.5
 
 %description
 OpenXcom is an open-source reimplementation of the popular
