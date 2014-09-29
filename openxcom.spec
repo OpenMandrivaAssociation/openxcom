@@ -8,6 +8,7 @@ Url:		http://openxcom.org/
 Source0:	https://github.com/SupSuper/OpenXcom/%{name}-%{version}.tar.gz
 # http://www.iconfinder.com/icondetails/1360/128/ufo_icon
 Source1:	%{name}.png
+BuildRequires:	boost-devel
 BuildRequires:	cmake
 BuildRequires:	imagemagick
 BuildRequires:	pkgconfig(gl)
