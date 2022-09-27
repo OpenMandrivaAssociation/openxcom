@@ -1,15 +1,16 @@
 Summary:	Open-source reimplementation of the original X-Com
 Name:		openxcom
-Version:	1.0.0
-Release:	3
+Version:	1.0.20220927
+Release:	1
 License:	GPLv3+
 Group:		Games/Strategy
 Url:		http://openxcom.org/
-Source0:	https://github.com/SupSuper/OpenXcom/%{name}-%{version}.tar.gz
+Source0:	https://github.com/OpenXcom/OpenXcom/archive/refs/heads/master.tar.gz#/openxcom-%{version}.tar.gz
 # http://www.iconfinder.com/icondetails/1360/128/ufo_icon
 Source1:	%{name}.png
 BuildRequires:	boost-devel
 BuildRequires:	cmake
+BuildRequires:	ninja
 BuildRequires:	imagemagick
 BuildRequires:	pkgconfig(gl)
 BuildRequires:	pkgconfig(glu)
@@ -41,21 +42,22 @@ even segmentation faults.
 %files
 %{_bindir}/%{name}
 %{_datadir}/applications/%{name}.desktop
-%{_iconsdir}/hicolor/*/apps/%{name}.png
+%{_iconsdir}/hicolor/*/apps/%{name}.*
+%{_mandir}/man6/openxcom.6*
 %defattr(0644,root,root,0777)
 %{_datadir}/%{name}
 
 #----------------------------------------------------------------------------
 
 %prep
-%setup -q
+%autosetup -p1 -n OpenXcom-master
+%cmake -G Ninja
 
 %build
-%cmake
-%make
+%ninja_build -C build
 
 %install
-%makeinstall_std -C build
+%ninja_install -C build
 
 # install menu entry
 mkdir -p %{buildroot}%{_datadir}/applications/
