@@ -4,7 +4,7 @@ Version:	1.0.20220927
 Release:	1
 License:	GPLv3+
 Group:		Games/Strategy
-Url:		http://openxcom.org/
+Url:		https://openxcom.org/
 Source0:	https://github.com/OpenXcom/OpenXcom/archive/refs/heads/master.tar.gz#/openxcom-%{version}.tar.gz
 # http://www.iconfinder.com/icondetails/1360/128/ufo_icon
 Source1:	%{name}.png
