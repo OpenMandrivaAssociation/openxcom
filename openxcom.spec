@@ -1,7 +1,7 @@
 Summary:	Open-source reimplementation of the original X-Com
 Name:		openxcom
 Version:	1.0.20220927
-Release:	1
+Release:	2
 License:	GPLv3+
 Group:		Games/Strategy
 Url:		https://openxcom.org/
